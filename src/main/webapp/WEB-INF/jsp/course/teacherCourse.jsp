@@ -55,14 +55,14 @@
         </div>
     </div>
     <xblock>
-        <button class="layui-btn" onclick="openWin('添加课程','<%=basePath%>/course/toedit.do')"><i class="layui-icon"></i>上传视频</button>
+        <button class="layui-btn" onclick="openWin('上传视频','<%=basePath%>/course/toedit.do')"><i class="layui-icon"></i>上传视频</button>
             <span class="x-right" style="line-height:40px"></span>
             <table id="infoTable" lay-filter="courseTable"></table>
     </xblock>
 
 
 <script id="toolbar" type="text/html">
-    <button class="layui-btn layui-btn layui-btn-xs" lay-event="upd" onclick="openWin('课程信息','<%=basePath%>/course/toedit.do?id={{d.id}}')" ><i class="layui-icon">&#xe642;</i>查看详情</button>
+    <button class="layui-btn layui-btn layui-btn-xs" lay-event="upd" onclick="openWin('课程信息','<%=basePath%>Test/getVideo.do?id={{d.id}}')" ><i class="layui-icon">&#xe642;</i>播放视频</button>
 </script>
 <script>
     var t;

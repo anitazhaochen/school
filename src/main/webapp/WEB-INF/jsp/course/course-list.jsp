@@ -69,7 +69,7 @@
 
 </div>
 <script id="toolbar" type="text/html">
-    <button class="layui-btn layui-btn layui-btn-xs" lay-event="upd" onclick="openWin('课程信息','/school/course/toedit.do?id={{d.id}}')" ><i class="layui-icon">&#xe642;</i>查看详情</button>
+    <button class="layui-btn layui-btn layui-btn-xs" lay-event="upd" onclick="openWin('课程信息','/school/Test/video.do')" ><i class="layui-icon">&#xe642;</i>播放视频</button>
 </script>
 <script>
     var t;
