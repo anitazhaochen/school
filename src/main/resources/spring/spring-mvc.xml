@@ -14,6 +14,13 @@
             </list>
         </property>
     </bean>
+
+    <!-- 配置上传文件-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 上传尺寸为B ，这里是1G -->
+        <property name="maxUploadSize" value="1048576000"/>
+    </bean>
+
     <!--开启注解并注入处理的组件-->
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters" ref="fastJsonHttpMessageConverter" />

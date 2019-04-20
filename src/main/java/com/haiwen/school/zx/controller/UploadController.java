@@ -1,23 +1,27 @@
 package com.haiwen.school.zx.controller;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/back")
 public class UploadController {
 
-    @RequestMapping(value = "/addVideo")
-    public ModelAndView uploadflie_Video(
-            @RequestParam("file") CommonsMultipartFile file,
+    @RequestMapping(value = "/addVideo", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> uploadflie_Video(
+            @RequestParam("file") MultipartFile file,
             HttpServletRequest req, HttpServletRequest request) {
+
         System.out.println("进入addVideo视频上传控制层");
 
         if (file.getSize() != 0) {
@@ -164,6 +168,8 @@ public class UploadController {
 //                                + "&grade=-1&state=-1&subclass=" + subclass);
 //            }
         }
-        return null;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("msg", "添加成功");
+        return map;
     }
 }
