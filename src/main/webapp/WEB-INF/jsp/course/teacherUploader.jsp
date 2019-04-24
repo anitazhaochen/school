@@ -16,10 +16,9 @@
     <title>上传视频</title>
     <script type="text/javascript" src="<%=basePath%>/static/jquery-3.2.1.js"></script>
     <!--引入CSS-->
-    <link rel="stylesheet" type="text/css" href="/school/static/webuploader/webuploader.css">
-
-    <link rel="stylesheet" type="text/css" href="http://fex.baidu.com/webuploader/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>static/webuploader/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>static/webuploader/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>static/webuploader/bootstrap-theme.min.css">
 
 
     <!--SWF在初始化的时候指定，在后面将展示-->
