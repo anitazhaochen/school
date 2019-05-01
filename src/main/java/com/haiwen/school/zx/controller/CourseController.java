@@ -1,10 +1,7 @@
 package com.haiwen.school.zx.controller;
 
 import com.haiwen.school.zx.beans.*;
-import com.haiwen.school.zx.service.CourseService;
-import com.haiwen.school.zx.service.RestService;
-import com.haiwen.school.zx.service.StudentService;
-import com.haiwen.school.zx.service.TeacherService;
+import com.haiwen.school.zx.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +15,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/course")
 public class CourseController {
+    @Autowired
+    private VideoService videoService;
     @Autowired
     private CourseService courseService;
     @Autowired
@@ -47,12 +46,29 @@ public class CourseController {
         }
         return  courseService.getAll(page ,limit,course,new Courseinfo());
     }
+
+    @RequestMapping("/getList1")
+    @ResponseBody
+    public Map<String,Object> getPage1(HttpSession session,int page, int limit, Course course){
+        Logininfo logininfo= (Logininfo) session.getAttribute("userInfo");
+//        判断用户权限  一旦为2（教师） 则只查找自己名下的课程
+        if(logininfo.getPowerid()==2){
+            course.setTeacherid(teacherService.toUpd(logininfo.getUsername()).getId());
+        }else if(logininfo.getPowerid()==3||logininfo.getPowerid()==5){//一旦为3（学生） 只能查可选课程
+            course.setStatusid(5);
+        }
+        return  videoService.getAll();
+    }
+
+
 //教师课程列表跳转
     @RequestMapping("/toTeacherCourse")
     public String toTeacherCourse(){
         return "course/teacherCourse";
     }
-//    学生课程列表跳转
+
+
+//学生课程列表跳转
     @RequestMapping("/toStudentCourse")
     public  String toStudentCourse(HttpServletRequest request){
         request.setAttribute("type",restService.getProfession());

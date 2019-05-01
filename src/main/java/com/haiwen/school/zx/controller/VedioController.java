@@ -1,15 +1,17 @@
 package com.haiwen.school.zx.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
+import java.lang.reflect.Method;
 
 @Controller
 @RequestMapping("/Test")
@@ -20,12 +22,12 @@ public class VedioController {
          * @param id
          * @return
          */
-        @RequestMapping("/getVideo")
-        public String getVideo(String id) {
+        @RequestMapping(value = "/getVideo", method = RequestMethod.GET)
+        public String getVideo(@RequestParam("id") String id, Model m) {
 //            ModelAndView mav = new ModelAndView("success");
 //            mav.addObject("path", "/Test/Test/video.do?id="+id);
 //            return mav;
-            System.out.println("111111111111111");
+            m.addAttribute("videoid", id);
             return "course/video";
         }
 
@@ -43,11 +45,11 @@ public class VedioController {
          * @param response
          * @throws Exception
          */
-        @RequestMapping("/video.do")
+        @RequestMapping(value = "/video.do", method = RequestMethod.GET)
         public @ResponseBody
-        void video(String id, HttpServletResponse response)throws Exception{
+        void video(@RequestParam("id") String id, HttpServletResponse response)throws Exception{
             System.out.println("流媒体 执行");
-            File file = new File("/Users/zhaochen/Desktop/video/temp/1555691874409.mp4");
+            File file = new File("/Users/zhaochen/Desktop/video/temp/"+id);
             FileInputStream in = new FileInputStream(file);
             ServletOutputStream out = response.getOutputStream();
             byte[] b = null;

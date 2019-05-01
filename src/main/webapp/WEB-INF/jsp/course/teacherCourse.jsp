@@ -62,7 +62,7 @@
 
 
 <script id="toolbar" type="text/html">
-    <button class="layui-btn layui-btn layui-btn-xs" lay-event="upd" onclick="openWin('课程信息','<%=basePath%>Test/getVideo.do?id={{d.id}}')" ><i class="layui-icon">&#xe642;</i>播放视频</button>
+    <button class="layui-btn layui-btn layui-btn-xs" lay-event="upd" onclick="openWin('课程信息','<%=basePath%>Test/getVideo.do?id={{d.pathname}}')" ><i class="layui-icon">&#xe642;</i>播放视频</button>
 </script>
 <script>
     var t;
@@ -76,18 +76,22 @@
         });
         t=table.render({
             elem:'#infoTable',
-            url:'<%=basePath%>/course/getList.do',
+            url:'<%=basePath%>/course/getList1.do',
             cols:[[
                 {type:'checkbox'},
-                {field:'id',title:'编号'},
-                {field:'coursename',title:'课程名'},
-                {field:'courseremake',title:'课程简介'},
-                {field:'maxsum',title:'人数上限'},
-                {field:'realsum',title:'实际人数'},
-                {field:'statusname',title:'状态'},
-                {field:'startdate',title:'预计开课日期'},
-                {field:'enddate',title:'结束日期'},
-                {field:'opt',title:'操作',toolbar:'#toolbar'}
+                 {field:'id',title:'编号'},
+                 {field:'oldname',title:'视频名称'},
+                 {field:'pathname',title:'服务器视频名称'},
+                 {field:'opt',title:'操作',toolbar:'#toolbar'},
+                 // {field:'id',title:'编号'},
+                // {field:'coursename',title:'课程名'},
+                // {field:'courseremake',title:'课程简介'},
+                // {field:'maxsum',title:'人数上限'},
+                // {field:'realsum',title:'实际人数'},
+                // {field:'statusname',title:'状态'},
+                // {field:'startdate',title:'预计开课日期'},
+                // {field:'enddate',title:'结束日期'},
+                // {field:'opt',title:'操作',toolbar:'#toolbar'}
             ]],
             page:true
         });

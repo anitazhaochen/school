@@ -1,10 +1,16 @@
 package com.haiwen.school.zx.controller;
 
+import com.haiwen.school.zx.beans.Logininfo;
+import com.haiwen.school.zx.beans.Video;
+import com.haiwen.school.zx.service.VideoService;
+import com.haiwen.school.zx.service.impl.VideoServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,13 +20,19 @@ import java.util.Map;
 @RequestMapping("/back")
 public class UploadController {
 
+    @Autowired
+    private VideoService videoService;
+
     @RequestMapping(value = "/addVideo", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> uploadflie_Video(
             @RequestParam("file") MultipartFile file,
-            HttpServletRequest req, HttpServletRequest request) {
+            HttpServletRequest req, HttpServletRequest request, HttpSession session){
 
+        Logininfo logininfo = (Logininfo) session.getAttribute("userInfo");
         System.out.println("进入addVideo视频上传控制层");
+        Video video = new Video();
+        video.setUserid(logininfo.getId());
 
         if (file.getSize() != 0) {
             //上传的多格式的视频文件-作为临时路径保存，转码以后删除-路径不能写//
@@ -41,6 +53,7 @@ public class UploadController {
 
             // 获取上传时候的文件名
             String filename = file.getOriginalFilename();
+            video.setOldname(filename);
 
             // 获取文件后缀名
             String filename_extension = filename.substring(filename
@@ -50,6 +63,10 @@ public class UploadController {
             //时间戳做新的文件名，避免中文乱码-重新生成filename
             long filename1 = new Date().getTime();
             filename = Long.toString(filename1)+"."+filename_extension;
+            System.out.println("11111111111111111111");
+            System.out.println(filename);
+            System.out.println("11111111111111111111");
+            video.setPathname(filename);
 
             //去掉后缀的文件名
             String filename2 = filename.substring(0, filename.lastIndexOf("."));
@@ -82,6 +99,7 @@ public class UploadController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+
 
 //            System.out.println("========上传完成，开始调用转码工具类=======");
 //            //调用转码机制flv mp4 f4v m3u8 webm ogg放行直接播放，
@@ -166,6 +184,9 @@ public class UploadController {
 //                                + "&grade=-1&state=-1&subclass=" + subclass);
 //            }
         }
+        System.out.println("进行存储");
+        videoService.insert(video);
+        System.out.println("结束存储");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("msg", "添加成功");
         return map;

@@ -10,7 +10,7 @@
     <script src="/school/jarisplayer/bin/js/swfobject.js" type="text/javascript"></script>
     <script type="text/javascript">
         var flashvarsVideoNewControls = {
-            source: "/school/Test/video.do",
+            source: "/school/Test/video.do?id=${videoid}",
             type: "video",
             streamtype: "file",
             server: "",//Used for rtmp streams

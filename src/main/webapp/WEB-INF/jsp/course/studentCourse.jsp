@@ -72,13 +72,13 @@
             cols:[[
                 {type:'checkbox'},
                 {field:'id',title:'编号'},
-                {field:'coursename',title:'课程名'},
-                {field:'courseremake',title:'课程介绍'},
-                {field:'statusname',title:'目前状态'},
-                {field:'typename',title:'课程类型'},
-                {field:'teachername',title:'授课教师'},
-                {field:'startdate',title:'预计开课日期',sort:true},
-                {field:'opt',title:'操作',templet:function (d) {
+                {field:'oldname',title:'课程名'},
+                // {field:'courseremake',title:'课程介绍'},
+                // {field:'statusname',title:'目前状态'},
+                // {field:'typename',title:'课程类型'},
+                // {field:'teachername',title:'授课教师'},
+                // {field:'startdate',title:'预计开课日期',sort:true},
+                // {field:'opt',title:'操作',templet:function (d) {
                         console.log(d.realsum >= d.maxsum);
                         console.log(d.realsum);
                     if(d.realsum>=d.maxsum){
