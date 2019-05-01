@@ -45,10 +45,12 @@
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
                 <dd><a onclick="x_admin_show('编辑个人资料','<%=basePath%>/user/toedit.do','500','600')">个人资料</a></dd>
                 <dd><a onclick="x_admin_show('修改密码','<%=basePath%>/login/toedit.do?id=${userInfo.id}','600','500')">修改密码</a></dd>
+                <dd><a onclick="x_admin_show('添加公告','<%=basePath%>teacher/toEditNotice.do?id=${userInfo.id}','600','500')">添加公告</a></dd>
                 <dd><a href="<%=basePath%>/user/exit.do">退出</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
+
     </ul>
 
 </div>

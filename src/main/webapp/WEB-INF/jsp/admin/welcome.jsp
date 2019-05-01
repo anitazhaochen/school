@@ -1,3 +1,4 @@
+<%@ page import="javax.swing.plaf.basic.BasicHTML" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -27,6 +28,16 @@
     <script type="text/javascript" src="<%=basePath%>/X-admin/js/xadmin.js"></script>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <style>
+        .poptip{background:#FFFCEF;color: #DB7C22;float:left;position: relative;top:8px;left:40px;height: 35px;padding: 6px 10px 5px;font-size: 12px;border: solid 1px #FFBB76;border-radius: 2px;box-shadow: 0 0 3px #ddd;}
+        .poptip-arrow{position: absolute;overflow: hidden;font-style: normal;font-family: simsun;font-size: 12px;text-shadow:0 0 2px #ccc;}
+        .poptip-arrow em,.poptip-arrow i{position: absolute;left:0;top:0;font-style: normal;}
+        .poptip-arrow em{color:#FFBB76;}
+        .poptip-arrow i{color: #FFFCEF;}
+        .poptip-arrow-left{left:-6px;height: 12px;width: 6px;top: 12px;margin-top:-6px;}
+        .poptip-arrow-left em{left:1px;}
+        .poptip-arrow-left i{left:2px;}
+    </style>
 </head>
 <body>
 <div class="x-body layui-anim layui-anim-up">
@@ -36,7 +47,13 @@
             <a style="float: right" onclick="x_admin_show('申请教师','<%=basePath%>/teacher/toEdit.do','500','500')">如需申请教师，请点此处</a>
         </c:if>
     </blockquote>
-    <div style="height: 250px"></div>
+    <div style="height: 250px">
+        <div class="poptip">
+            <span class="poptip-arrow poptip-arrow-left"><em>◆</em><i>◆</i></span>
+            <span class="x-red">通知:</span> <br>${notice.message}<br>${notice.adddate}
+        </div>
+
+    </div>
     <fieldset class="layui-elem-field">
         <legend>开发目的</legend>
         <div class="layui-field-box">

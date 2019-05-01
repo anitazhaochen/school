@@ -1,10 +1,7 @@
 package com.haiwen.school.zx.controller;
 
 import com.haiwen.school.zx.beans.*;
-import com.haiwen.school.zx.service.AuditService;
-import com.haiwen.school.zx.service.CourseService;
-import com.haiwen.school.zx.service.RestService;
-import com.haiwen.school.zx.service.TeacherService;
+import com.haiwen.school.zx.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +9,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/teacher")
 public class TeacherController {
+    @Autowired
+    private NoticeService noticeService;
     @Autowired
     private TeacherService teacherService;
     @Autowired
@@ -53,6 +54,16 @@ public class TeacherController {
         return "teacher/teacher-edit";
     }
 
+
+    @RequestMapping("/toEditNotice")
+    public String toEditNotice(HttpSession session,HttpServletRequest request){
+//        根据session中的用户信息获取与之对应的教师资料
+//        Logininfo logininfo = (Logininfo) session.getAttribute("userInfo");
+//        Teacher teacher = teacherService.toUpd(logininfo.getUsername());
+//        request.setAttribute("teacherType",restService.getProfession());
+        return "teacher/teacher-edit-notice";
+    }
+
     @RequestMapping("/doUpdate")//更新
     @ResponseBody
     public Map<String,Object> doUpdate(Teacher teacher){
@@ -69,6 +80,24 @@ public class TeacherController {
             map.put("msg","当前已有求职申请待管理员审核，请勿重复操作谢谢");
         }
 
+        return map;
+    }
+    @RequestMapping(value = "doupdatenotice")
+    @ResponseBody
+    public Map<String,Object> doUpdateNotice(Notice notice, HttpSession session){
+        Map<String,Object> map=new HashMap<String, Object>();
+        if (notice.getMessage()!=null){
+            map.put("code", 1);
+            Date dNow = new Date( );
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:MM:SS");
+            notice.setAdddate(ft.format(dNow).toString());
+            Logininfo logininfo = (Logininfo) session.getAttribute("userInfo");
+            notice.setUserid(logininfo.getId());
+            noticeService.insert(notice);
+        }else{
+            map.put("code",0);
+            map.put("msg","修改失败");
+        }
         return map;
     }
 
