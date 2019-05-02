@@ -47,7 +47,7 @@ public class StudentController {
         if (student != null) {
             request.setAttribute("student", student);
         }
-        Homework h = homeworkService.selectByPrimaryKey(logininfo.getId());
+        Homework h = homeworkService.selectByPrimaryKey(id);
         model.addAttribute("homework", h);
         return "student/student-edit";
     }

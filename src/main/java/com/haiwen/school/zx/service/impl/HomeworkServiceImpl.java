@@ -34,6 +34,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     public Homework selectByPrimaryKey(int id) {
+        System.out.println("查询的 文章id 为"+ id);
         return homeworkMapper.selectByPrimaryKey(id);
     }
 }

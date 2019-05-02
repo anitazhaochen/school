@@ -23,10 +23,10 @@
         <form class="layui-form" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>文章标题</td><td><input type="text" name="title" required="" class="layui-input"></td>
+                    <td>文章标题</td><td><input value="${homework.title}" type="text" name="title" required="" class="layui-input"></td>
                 </tr>
                 <tr>
-                    <td>文章内容</td><td><textarea name="content" id="content" style="width: 800px; height: 400px; margin: 0 auto;" required="" class="layui-input"></textarea></td>
+                    <td>文章内容</td><td><textarea name="content" id="content" style="width: 800px; height: 400px; margin: 0 auto;" required="" class="layui-input">${homework.content}</textarea></td>
                 </tr>
                 <%--<tr>--%>
                     <%--<td>添加附件</td><td><input type="file" name="file" required="" class="layui-input"></td>--%>
