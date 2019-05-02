@@ -124,7 +124,8 @@ public class TeacherController {
     public String toAudit(HttpServletRequest request) {
         request.setAttribute("status",restService.getAuditStatus());
         request.setAttribute("type",restService.getAudittype());
-        return "teacher/teacher-auditList";
+//        return "teacher/teacher-auditList";
+        return "teacher/teacher-homework";
     }
     @RequestMapping("/getAudit")
     @ResponseBody
