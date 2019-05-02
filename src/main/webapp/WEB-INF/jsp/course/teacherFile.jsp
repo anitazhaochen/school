@@ -55,14 +55,15 @@
         </div>
     </div>
     <xblock>
-        <button class="layui-btn" onclick="openWin('上传视频','<%=basePath%>/course/toedit.do')"><i class="layui-icon"></i>上传视频</button>
+        <button class="layui-btn" onclick="openWin('上传文件','<%=basePath%>/course/toedit.do')"><i class="layui-icon"></i>上传文件</button>
             <span class="x-right" style="line-height:40px"></span>
             <table id="infoTable" lay-filter="courseTable"></table>
     </xblock>
 
 
 <script id="toolbar" type="text/html">
-    <button class="layui-btn layui-btn layui-btn-xs" lay-event="upd" onclick="openWin('播放视频','<%=basePath%>Test/getVideo.do?id={{d.pathname}}')" ><i class="layui-icon">&#xe642;</i>播放视频</button>
+    <%--<button class="layui-btn layui-btn layui-btn-xs" lay-event="upd" onclick="openWin('查看文件','<%=basePath%>Test/getFile.do?id={{d.pathname}}')" ><i class="layui-icon">&#xe642;</i>下载文件</button>--%>
+    <a href="<%=basePath%>Test/getFile.do?id={{d.pathname}}" download="{{d.oldname}}">下载文件</a>
 </script>
 <script>
     var t;
@@ -76,12 +77,12 @@
         });
         t=table.render({
             elem:'#infoTable',
-            url:'<%=basePath%>/course/getList1.do?type=2',
+            url:'<%=basePath%>/course/getList1.do?type=1',
             cols:[[
                 {type:'checkbox'},
                  {field:'id',title:'编号'},
-                 {field:'oldname',title:'视频名称'},
-                 {field:'pathname',title:'服务器视频名称'},
+                 {field:'oldname',title:'文件名称'},
+                 {field:'pathname',title:'服务器文件名称'},
                  {field:'opt',title:'操作',toolbar:'#toolbar'},
                  // {field:'id',title:'编号'},
                 // {field:'coursename',title:'课程名'},

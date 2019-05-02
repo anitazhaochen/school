@@ -1,5 +1,6 @@
 package com.haiwen.school.zx.controller;
 
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 @Controller
@@ -23,13 +26,34 @@ public class VedioController {
          * @return
          */
         @RequestMapping(value = "/getVideo", method = RequestMethod.GET)
-        public String getVideo(@RequestParam("id") String id, Model m) {
+    public String getVideo(@RequestParam("id") String id, Model m) {
 //            ModelAndView mav = new ModelAndView("success");
 //            mav.addObject("path", "/Test/Test/video.do?id="+id);
 //            return mav;
-            m.addAttribute("videoid", id);
-            return "course/video";
+        m.addAttribute("videoid", id);
+        return "course/video";
+    }
+
+
+    @RequestMapping(value = "/getFile", method = RequestMethod.GET)
+    public void getFile(@RequestParam("id") String id, Model m, HttpServletResponse response) throws IOException {
+        File file = new File("/Users/zhaochen/Desktop/video/temp/"+id);
+        FileInputStream in = new FileInputStream(file);
+        ServletOutputStream out = response.getOutputStream();
+        byte[] b = null;
+        while(in.available() >0) {
+            if(in.available()>10240) {
+                b = new byte[10240];
+            }else {
+                b = new byte[in.available()];
+            }
+            in.read(b, 0, b.length);
+            out.write(b, 0, b.length);
         }
+        in.close();
+        out.flush();
+        out.close();
+    }
 
 //            @RequestMapping("/getVideo.do")
 //        public String getVideo(String id,HttpServletRequest request) {

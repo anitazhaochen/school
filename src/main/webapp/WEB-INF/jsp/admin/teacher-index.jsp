@@ -73,6 +73,12 @@
                             <cite>课程列表</cite>
                         </a>
                     </li >
+                    <li>
+                        <a _href="<%=basePath%>/course/toTeacherFile.do">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>文件列表</cite>
+                        </a>
+                    </li >
                 </ul>
             </li>
             <li>

@@ -27,7 +27,7 @@ public class UploadController {
     @ResponseBody
     public Map<String, Object> uploadflie_Video(
             @RequestParam("file") MultipartFile file,
-            HttpServletRequest req, HttpServletRequest request, HttpSession session){
+            HttpServletRequest req, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
 
         Logininfo logininfo = (Logininfo) session.getAttribute("userInfo");
         System.out.println("进入addVideo视频上传控制层");
@@ -52,7 +52,8 @@ public class UploadController {
             }
 
             // 获取上传时候的文件名
-            String filename = file.getOriginalFilename();
+            String filename = new String(file.getOriginalFilename().getBytes("ISO-8859-1"), "UTF-8");
+            System.out.println("源文件 名字:"+ filename);
             video.setOldname(filename);
 
             // 获取文件后缀名
@@ -63,9 +64,6 @@ public class UploadController {
             //时间戳做新的文件名，避免中文乱码-重新生成filename
             long filename1 = new Date().getTime();
             filename = Long.toString(filename1)+"."+filename_extension;
-            System.out.println("11111111111111111111");
-            System.out.println(filename);
-            System.out.println("11111111111111111111");
             video.setPathname(filename);
 
             //去掉后缀的文件名

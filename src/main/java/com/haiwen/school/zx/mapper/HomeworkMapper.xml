@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haiwen.school.zx.mapper.HomeworkMapper" >
+  <select id="selectByPrimaryKey" resultType="Homework" parameterType="java.lang.Integer" >
+    select *
+    from homework
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from status
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.haiwen.school.zx.beans.Homework" >
+    insert into homework(id, title, content, userid, status, adddate)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{adddate})
+  </insert>
+  <insert id="insertSelective" parameterType="com.haiwen.school.zx.beans.Homework" >
+    insert into status
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="statusname != null" >
+        statusName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="statusname != null" >
+        #{statusname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.haiwen.school.zx.beans.Homework" >
+    update status
+    <set >
+      <if test="statusname != null" >
+        statusName = #{statusname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.haiwen.school.zx.beans.Homework" >
+    update status
+    set statusName = #{statusname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAll" resultType="Homework">
+    select * from homework;
+  </select>
+</mapper>

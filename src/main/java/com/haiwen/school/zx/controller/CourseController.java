@@ -5,16 +5,19 @@ import com.haiwen.school.zx.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/course")
 public class CourseController {
+    @Autowired
+    private HomeworkService homeworkService;
     @Autowired
     private VideoService videoService;
     @Autowired
@@ -49,7 +52,32 @@ public class CourseController {
 
     @RequestMapping("/getList1")
     @ResponseBody
-    public Map<String,Object> getPage1(HttpSession session,int page, int limit, Course course){
+    public Map<String,Object> getPage1(@RequestParam("type")int type, HttpSession session, int page, int limit, Course course){
+
+            HashMap<String, Object> map = (HashMap<String, Object>) videoService.getAll();
+            List<Video> list = (List<Video>) map.get("data");
+            List<Video> newlist = new ArrayList<Video>();
+            for (Video video : list) {
+                int length = video.getPathname().split("\\.").length;
+                System.out.println(length);
+                if (type == 1 && !("mp4".equals(video.getPathname().split("\\.")[length-1]))) {
+                    System.out.println("type 1  执行了");
+                    newlist.add(video);
+                }
+                System.out.println(video.getPathname().split("\\.")[length-1]);
+                if ("mp4".equals(video.getPathname().split("\\.")[length-1]) && type == 2) {
+                    System.out.println("type 2  执行了");
+                    newlist.add(video);
+                }
+            }
+            map.put("data", newlist);
+            return map;
+
+    }
+
+    @RequestMapping("/getHomework")
+    @ResponseBody
+    public Map<String,Object> getHomework(HttpSession session,int page, int limit, Course course){
         Logininfo logininfo= (Logininfo) session.getAttribute("userInfo");
 //        判断用户权限  一旦为2（教师） 则只查找自己名下的课程
         if(logininfo.getPowerid()==2){
@@ -57,7 +85,8 @@ public class CourseController {
         }else if(logininfo.getPowerid()==3||logininfo.getPowerid()==5){//一旦为3（学生） 只能查可选课程
             course.setStatusid(5);
         }
-        return  videoService.getAll();
+
+        return (Map<String, Object>) homeworkService.getAll();
     }
 
 
@@ -67,6 +96,10 @@ public class CourseController {
         return "course/teacherCourse";
     }
 
+    @RequestMapping("/toTeacherFile")
+    public String toTeacherFile(){
+        return "course/teacherFile";
+    }
 
 //学生课程列表跳转
     @RequestMapping("/toStudentCourse")

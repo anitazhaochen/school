@@ -68,47 +68,20 @@
         });
         t=table.render({
             elem:'#infoTable',
-            url:'<%=basePath%>/course/getList.do',
+            url:'<%=basePath%>/course/getHomework.do',
             cols:[[
                 {type:'checkbox'},
                 {field:'id',title:'编号'},
-                {field:'coursename',title:'课程名'},
-                {field:'courseremake',title:'课程介绍'},
-                {field:'statusname',title:'目前状态'},
-                {field:'typename',title:'课程类型'},
-                {field:'teachername',title:'授课教师'},
-                {field:'startdate',title:'预计开课日期',sort:true},
+                {field:'title',title:'标题'},
+                {field:'adddate',title:'提交时间'},
+                {field:'status',title:'目前状态'},
                 {field:'opt',title:'操作',templet:function (d) {
-                        console.log(d.realsum >= d.maxsum);
-                        console.log(d.realsum);
-                    if(d.realsum>=d.maxsum){
-                        return '<button class="layui-btn layui-btn-disabled layui-btn-xs" ><i class="layui-icon">&#xe642;</i>人数上限</button>';
+                        var id = d.id;
+                    if(d.status=="已提交"){
+                        // return '<button class="layui-btn layui-btn-disabled layui-btn-xs" ><i class="layui-icon">&#xe642;</i>查看</button>'
+                        return "<button class='layui-btn layui-btn-warm layui-btn-xs' onclick=" +"openWin('查看','/school/student/toEdit.do?id="+id+"')>"+"<i class='layui-icon'>&#xe642;</i>查看作业</button>";
                     }else {
-                        var msg;
-                        $.ajax({
-                            url:"<%=basePath%>/course/check.do",
-                            data: {id:d.id},
-                            method:'post',
-                            async:false,
-                            success:function (res) {
-                                res=JSON.parse(res);
-                                if(res.msgMax){
-                                    msg= '<button class="layui-btn layui-btn-disabled layui-btn-xs" ><i class="layui-icon">&#xe642;</i>'+res.msgMax+'</button>';
-                                }else {
-                                    msg= "<button class='layui-btn layui-btn-xs' onclick=\"openWin('课程信息','/school/course/enter.do?id="+d.id+"')\" ><i class='layui-icon'>&#xe642;</i>点击报名</button>";
-                                }
-                                if(res.hello){
-                                    msg= "<button class='layui-btn layui-btn-warm layui-btn-xs' onclick=\"openWin('个人资料','/school/user/toedit.do?')\" ><i class='layui-icon'>&#xe642;</i>提交作业</button>";
-                                }
-
-                            },
-                            error:function (err) {
-                                layer.alert("与服务器连接失败....");
-                                console.log(err)
-                            }
-                        })
-                        console.log(msg)
-                        return msg;
+                        return "<button class='layui-btn layui-btn-warm layui-btn-xs' onclick=" +"openWin('提交作业','<%=basePath%>student/toEdit.do?id="+id+"')>"+"<i class='layui-icon'>&#xe642;</i>提交作业</button>";
                     }
                     }}
             ]],
